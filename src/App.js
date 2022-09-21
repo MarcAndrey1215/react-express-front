@@ -9,8 +9,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import axios from 'axios';
 import { useState } from "react";
 
-//axios.defaults.baseURL = "https://serverdom.herokuapp.com/";
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+axios.defaults.baseURL = "https://carbine.herokuapp.com/api";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});

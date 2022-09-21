@@ -10,44 +10,30 @@ const Register = () => {
         last_name: "",
         email: "",
         password: "",
-        password_confirmation: "",
-        image: "",
+        confirm_password: "",
         error_list: {}
     }
   );
 
   const onInputChange = (e) => {
-    let value = e.target.value;
-
-    if(e.target.name === 'image') {
-      value = e.target.files[0];
-    }
-
     setUser( 
         {
             ...user,
-            [e.target.name]: value
+            [e.target.name]: e.target.value
         }
     );
   }
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    // const data = {
-    //     first_name: user.first_name,
-    //     last_name: user.last_name,
-    //     email: user.email,
-    //     password: user.password,
-    //     password_confirmation: user.password_confirmation,
-    //     image: user.image
-    // }
-    const formData = new FormData();
-    
-    for (let field in user) {
-      formData.append(field, user[field]);
+    const data = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        password: user.password,
+        confirm_password: user.confirm_password
     }
-
-    axios.post('/user', formData).then( (res) => {
+    axios.post('http://localhost:3001/users/register', data).then( (res) => {
         swal("Success", "Registered successfully", "success");
         setUser(
           {
@@ -55,8 +41,7 @@ const Register = () => {
             last_name: "",
             email: "",
             password: "",
-            password_confirmation: "",
-            image: "",
+            confirm_password: "",
             error_list: {}
           }
         );
@@ -75,7 +60,7 @@ const Register = () => {
               <h4>Register User</h4>
             </div>
             <div className="card-body">
-              <form onSubmit={onFormSubmit} encType="multipart/form-data">
+              <form onSubmit={onFormSubmit}>
                 <div className="input-group mb-3">
                   <label htmlFor="first_name" className="input-group-text">
                     First Name
@@ -141,35 +126,19 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="input-group mb-3">
-                  <label htmlFor="password_confirmation" className="input-group-text">
+                  <label htmlFor="confirm_password" className="input-group-text">
                     Confirm Password
                   </label>
                   <input
-                    className={`form-control ${user.error_list.password_confirmation ? "is-invalid" : ""}`}
-                    name="password_confirmation"
-                    id="password_confirmation"
+                    className={`form-control ${user.error_list.confirm_password ? "is-invalid" : ""}`}
+                    name="confirm_password"
+                    id="confirm_password"
                     type="text"
                     onChange={onInputChange}
-                    value={user.password_confirmation}
+                    value={user.confirm_password}
                   />
                   <div className="invalid-feedback">
-                    {user.error_list.password_confirmation}
-                  </div>
-                </div>
-                <div className="input-group mb-3">
-                  <label htmlFor="image" className="input-group-text">
-                    Upload Image
-                  </label>
-                  <input
-                    className={`form-control ${user.error_list.image ? "is-invalid" : ""}`}
-                    name="image"
-                    id="image"
-                    type="file"
-                    accept="image/*"
-                    onChange={onInputChange}
-                  />
-                  <div className="invalid-feedback">
-                    {user.error_list.image}
+                    {user.error_list.confirm_password}
                   </div>
                 </div>
                 <div className="input-group mb-3">
